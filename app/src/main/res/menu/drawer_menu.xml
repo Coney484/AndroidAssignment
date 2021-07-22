@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:shownIn="navigation_view">
+
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_action_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/user_details"
+            android:icon="@drawable/ic_action_user_details"
+            android:title="User Details" />
+        <item
+            android:id="@+id/user_contacts"
+            android:icon="@drawable/ic_action_user_contact"
+            android:title="User Contacts" />
+        <item
+            android:id="@+id/dummy_login"
+            android:icon="@drawable/ic_action_dummy_login"
+            android:title="Dummy Login" />
+        <item
+            android:id="@+id/edit_user"
+            android:icon="@drawable/ic_action_edit_user"
+            android:title="Edit User" />
+    </group>
+
+
+</menu>
