@@ -1,4 +1,4 @@
-package com.example.androidassignment
+package com.example.androidassignment.ui.fragment
 
 import android.app.Activity
 import android.content.Intent
@@ -11,11 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
+import com.example.androidassignment.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_first.*
-import java.util.jar.Manifest
 
 class FirstFragment : Fragment(R.layout.fragment_first) {
 
@@ -48,6 +47,11 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         }
 
         //loading image from gallery
+        loadImageFromGallery(v)
+        return v
+    }
+
+    private fun loadImageFromGallery(v: View) {
         val btnimage = v.findViewById<Button>(R.id.btnCameraLoad);
         btnimage.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -66,7 +70,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             }
 
         }
-        return v
     }
 
 
@@ -76,6 +79,8 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         startActivityForResult(intent, IMAGE_PICK_CODE)
 
     }
+
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

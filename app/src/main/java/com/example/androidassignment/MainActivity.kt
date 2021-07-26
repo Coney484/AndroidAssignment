@@ -3,6 +3,7 @@ package com.example.androidassignment
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.androidassignment.ui.activity.SecondActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
 
         btnToSecondActivity.setOnClickListener {
-            startActivity(Intent(this,SecondActivity::class.java))
+            startActivity(Intent(this, SecondActivity::class.java))
         }
     }
 }

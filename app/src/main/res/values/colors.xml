@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="COLOR_OF_ICON">#FFFFFFFF</color>
+    <color name="green">#4DD637</color>
 
 </resources>

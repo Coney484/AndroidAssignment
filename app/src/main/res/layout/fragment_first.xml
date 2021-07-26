@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:padding="10dp"
-    tools:context=".FirstFragment">
+    tools:context=".ui.fragment.FirstFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"

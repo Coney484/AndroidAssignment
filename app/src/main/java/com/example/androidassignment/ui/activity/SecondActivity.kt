@@ -1,4 +1,4 @@
-package com.example.androidassignment
+package com.example.androidassignment.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
+import com.example.androidassignment.*
+import com.example.androidassignment.ui.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_second.*
 import kotlinx.android.synthetic.main.drawer_toolbar.*
@@ -14,7 +16,7 @@ import kotlinx.android.synthetic.main.drawer_toolbar.*
 class SecondActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var homeFragment: HomeFragment;
     lateinit var firstFragment: FirstFragment
-    lateinit var seondFragment: SeondFragment
+    lateinit var secondFragment: SecondFragment
     lateinit var thirdFragment: ThirdFragment
     lateinit var fourFragment: FourFragment
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,10 +90,16 @@ class SecondActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             }
 
             R.id.user_contacts -> {
-                seondFragment = SeondFragment()
+                secondFragment = SecondFragment()
+                toolBar.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.design_default_color_primary
+                    )
+                )
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.container_fragment, seondFragment)
+                    .replace(R.id.container_fragment, secondFragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
 
@@ -125,4 +133,6 @@ class SecondActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             super.onBackPressed()
         }
     }
+
+
 }
