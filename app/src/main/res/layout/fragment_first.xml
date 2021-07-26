@@ -49,6 +49,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
             <Button
@@ -59,13 +60,17 @@
                 android:layout_marginTop="10dp"
                 android:text="Load Image" />
 
-            <include layout="@layout/user_details" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_frag1"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabWork"

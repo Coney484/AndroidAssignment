@@ -3,8 +3,10 @@ package com.example.androidassignment.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,20 +14,30 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.androidassignment.R
+import com.example.androidassignment.SQLiteHelper
+import com.example.androidassignment.model.UserModel
+import com.example.androidassignment.ui.adapter.UserAdapter
+import com.example.androidassignment.ui.adapter.UserdbAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_first.*
 
 class FirstFragment : Fragment(R.layout.fragment_first) {
 
 
-    companion object {
-        //image pick code
-        private val IMAGE_PICK_CODE = 1000;
+    private lateinit var sqLiteHelper: SQLiteHelper
+    private lateinit var recycler_view_DB: RecyclerView
+    private lateinit var userdbAdapter: UserdbAdapter
+    private lateinit var usrList: ArrayList<UserModel>
 
-        //permission code
-        private val PERMISSION_cODE = 1001;
-    }
+    //image pick code
+    private val IMAGE_PICK_CODE = 1000;
+
+    //permission code
+    private val PERMISSION_cODE = 1001;
 
 
     override fun onCreateView(
@@ -35,9 +47,27 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     ): View? {
 
         val v = inflater.inflate(R.layout.fragment_first, container, false)
+        sqLiteHelper = SQLiteHelper(requireActivity())
+        usrList = sqLiteHelper.getAllUser()
+        recycler_view_DB = v.findViewById(R.id.recycler_view_frag1)
+        recycler_view_DB.setHasFixedSize(true)
+        recycler_view_DB.layoutManager = LinearLayoutManager(context)
+        userdbAdapter = UserdbAdapter(context!!,usrList)
+        recycler_view_DB.adapter = userdbAdapter
 
         //fab on user details fragment
         val fabWorkBtn = v.findViewById<FloatingActionButton>(R.id.fabWork)
+        fraOnetoFraFourFAB(fabWorkBtn)
+
+
+        //loading image from gallery
+        loadImageFromGallery(v)
+        return v
+    }
+
+
+    //FAB Button that takes to Fragment 4
+    private fun fraOnetoFraFourFAB(fabWorkBtn: FloatingActionButton) {
         fabWorkBtn.setOnClickListener {
             val fourFragment = FourFragment();
             val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
@@ -45,12 +75,10 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             transaction.commit()
 
         }
-
-        //loading image from gallery
-        loadImageFromGallery(v)
-        return v
     }
 
+
+    //Load Image From Gallery
     private fun loadImageFromGallery(v: View) {
         val btnimage = v.findViewById<Button>(R.id.btnCameraLoad);
         btnimage.setOnClickListener {
@@ -72,7 +100,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         }
     }
 
-
+    //Pick Image from Gallery
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -81,7 +109,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
 
-
+    //Handling Gallery Permission
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -89,20 +117,21 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        when(requestCode){
-            PERMISSION_cODE ->{
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        when (requestCode) {
+            PERMISSION_cODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
-                } else{
-                    Toast.makeText(context,"PERMISSION DENIED",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "PERMISSION DENIED", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
+    // Displaying Image in Imageview from Gallery
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             imgSelect.setImageURI(data?.data)
         }
     }
