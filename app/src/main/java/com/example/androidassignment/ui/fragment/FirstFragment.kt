@@ -3,26 +3,23 @@ package com.example.androidassignment.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidassignment.R
 import com.example.androidassignment.SQLiteHelper
 import com.example.androidassignment.model.UserModel
-import com.example.androidassignment.ui.adapter.UserAdapter
 import com.example.androidassignment.ui.adapter.UserdbAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.card_items_usr_frag1.view.*
 import kotlinx.android.synthetic.main.fragment_first.*
 
 class FirstFragment : Fragment(R.layout.fragment_first) {
@@ -33,6 +30,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     private lateinit var userdbAdapter: UserdbAdapter
     private lateinit var usrList: ArrayList<UserModel>
 
+//    private  var usrList: UserModel? = null
     //image pick code
     private val IMAGE_PICK_CODE = 1000;
 
@@ -57,8 +55,24 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         //fab on user details fragment
         val fabWorkBtn = v.findViewById<FloatingActionButton>(R.id.fabWork)
-        fraOnetoFraFourFAB(fabWorkBtn)
 
+
+        userdbAdapter.setOnClick {
+//            Toast.makeText(context,it.phone, Toast.LENGTH_SHORT).show()
+
+            val fourFragment = FourFragment();
+            val bundle = Bundle()
+            bundle.putString("name", it.name)
+            bundle.putString("email", it.email)
+            bundle.putString("phone", it.phone)
+            bundle.putString("address", it.address)
+            fourFragment.arguments = bundle
+//            usrList = it
+            val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
+            transaction.replace(R.id.container_fragment, fourFragment)
+            transaction.commit()
+
+        }
 
         //loading image from gallery
         loadImageFromGallery(v)
@@ -69,6 +83,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     //FAB Button that takes to Fragment 4
     private fun fraOnetoFraFourFAB(fabWorkBtn: FloatingActionButton) {
         fabWorkBtn.setOnClickListener {
+
             val fourFragment = FourFragment();
             val transaction: FragmentTransaction = fragmentManager!!.beginTransaction()
             transaction.replace(R.id.container_fragment, fourFragment)

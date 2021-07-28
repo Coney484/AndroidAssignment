@@ -10,6 +10,7 @@ data class UserModel(
     var phone: String = "",
     var address: String = ""
 ) {
+
     companion object {
         fun getAutoId(): Int {
             val random = Random()
